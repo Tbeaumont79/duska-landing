@@ -14,7 +14,9 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/'],
+      // '/' et '/blog' comme points d'entrée ; crawlLinks découvre chaque article
+      // via les liens du listing et du maillage interne.
+      routes: ['/', '/blog'],
     },
   },
 
