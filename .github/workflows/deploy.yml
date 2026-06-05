@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+# Stratégie (alignée sur le site Élan Gym) : la source GitHub Pages est la BRANCHE `gh-pages`.
+# On construit le site statique puis on pousse `.output/public` sur `gh-pages` ; GitHub publie
+# ensuite automatiquement (build par branche, NON facturé via Actions).
+#
+# Le compte étant verrouillé pour facturation, les workflows Actions peuvent ne pas démarrer ;
+# d'ici la régularisation, déploiement manuel via `pnpm run deploy`. Ce workflow se réactive seul.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write # pousser sur gh-pages
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Origine + sous-chemin projet tant que le domaine duska.app n'est pas relié.
+      NUXT_PUBLIC_SITE_ORIGIN: ${{ vars.NUXT_PUBLIC_SITE_ORIGIN || 'https://tbeaumont79.github.io' }}
+      NUXT_APP_BASE_URL: ${{ vars.NUXT_APP_BASE_URL || '/duska-landing/' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm generate
+      - name: Publish to gh-pages
+        run: npx -y gh-pages@6 --dotfiles -d .output/public -b gh-pages -u "github-actions-bot <support+actions@github.com>" -m "deploy: static build [skip ci]"
+        env:
+          GIT_USER: github-actions-bot

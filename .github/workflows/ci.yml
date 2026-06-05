@@ -1,0 +1,29 @@
+name: CI
+
+# Vérifs de base : typecheck + build statique. Doit rester verte avant merge (politique board).
+# NB : le compte est temporairement verrouillé pour facturation → les runs Actions peuvent ne
+# pas démarrer. Dans ce cas la CI est exécutée en local (pnpm typecheck && pnpm generate) et la
+# preuve est jointe à la PR. Le workflow se réactive seul à la régularisation.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm generate
