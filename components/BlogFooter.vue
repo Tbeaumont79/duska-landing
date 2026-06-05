@@ -6,15 +6,13 @@ const year = 2026
   <footer class="ftr">
     <div class="container ftr-in">
       <div class="ftr-brand">
-        <a href="#top" class="brand"><span class="brand-dot" aria-hidden="true" />Duska</a>
+        <NuxtLink to="/" class="brand"><span class="brand-dot" aria-hidden="true" />Duska</NuxtLink>
         <p>Des affirmations &amp; citations douces, pour chaque humeur.</p>
       </div>
       <nav class="ftr-nav" aria-label="Pied de page">
-        <a href="#benefices">Bénéfices</a>
-        <a href="#categories">Catégories</a>
-        <a href="#temoignages">Témoignages</a>
+        <NuxtLink to="/">Accueil</NuxtLink>
         <NuxtLink to="/blog">Blog</NuxtLink>
-        <a href="#telecharger">Installer</a>
+        <NuxtLink to="/#telecharger">Installer</NuxtLink>
       </nav>
     </div>
     <div class="container ftr-bottom">
