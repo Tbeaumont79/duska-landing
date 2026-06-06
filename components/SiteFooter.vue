@@ -15,6 +15,7 @@ const year = 2026
         <a href="#temoignages">Témoignages</a>
         <NuxtLink to="/blog">Blog</NuxtLink>
         <a href="#telecharger">Installer</a>
+        <NuxtLink to="/confidentialite">Confidentialité</NuxtLink>
       </nav>
     </div>
     <div class="container ftr-bottom">

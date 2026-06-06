@@ -13,6 +13,7 @@ const year = 2026
         <NuxtLink to="/">Accueil</NuxtLink>
         <NuxtLink to="/blog">Blog</NuxtLink>
         <NuxtLink to="/#telecharger">Installer</NuxtLink>
+        <NuxtLink to="/confidentialite">Confidentialité</NuxtLink>
       </nav>
     </div>
     <div class="container ftr-bottom">
