@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// Les liens store seront renseignés à la publication (gated TM/domaines THI-61/THI-67).
+// Lancement free-first Android : le badge Google Play est branché sur l'URL réelle
+// (déterministe via l'applicationId `app.duska.app`) et tagué UTM — voir <PlayStoreBadge>
+// et ~/data/store. iOS arrive plus tard → l'App Store reste en « bientôt ».
 const appStoreUrl = '#'
-const playStoreUrl = '#'
 </script>
 
 <template>
@@ -16,10 +17,7 @@ const playStoreUrl = '#'
             <span class="store-ico" aria-hidden="true"></span>
             <span class="store-txt"><small>Bientôt sur</small><strong>App Store</strong></span>
           </a>
-          <a :href="playStoreUrl" class="store" aria-label="Télécharger sur Google Play (bientôt disponible)">
-            <span class="store-ico" aria-hidden="true">▶</span>
-            <span class="store-txt"><small>Bientôt sur</small><strong>Google Play</strong></span>
-          </a>
+          <PlayStoreBadge source="landing" medium="badge" campaign="launch" />
         </div>
         <p class="note">Lancement imminent — disponible très bientôt sur iOS et Android.</p>
       </div>

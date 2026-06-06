@@ -93,11 +93,11 @@ useHead({
         <!-- Contenu first-party de confiance ; liens internes base-aware. -->
         <div class="prose" v-html="bodyHtml" />
 
-        <!-- CTA install (maillage vers la landing) -->
+        <!-- CTA téléchargement (WS-E) : Play Store tagué utm_source=blog + maillage landing -->
         <aside class="art-cta">
           <h2>Envie d'un moment Duska chaque jour ?</h2>
           <p>Choisis ton humeur, reçois l'affirmation qui te ressemble, entretiens ta série.</p>
-          <NuxtLink to="/#telecharger" class="btn btn-primary">Installer l'app</NuxtLink>
+          <DownloadButton source="blog" medium="cta" campaign="launch" label="Télécharger Duska" />
           <p class="cta-note">
             Découvre aussi <NuxtLink to="/">la présentation de Duska</NuxtLink>.
           </p>
