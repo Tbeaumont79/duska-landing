@@ -1,0 +1,8 @@
+# robots.txt statique — site servi sous sous-chemin GitHub Pages projet.
+# Le module @nuxtjs/robots refuse de générer un robots.txt sous un baseURL ; ce fichier
+# statique répond donc 200 et déclare le sitemap. Lors du passage au domaine racine duska.app
+# (THI-67), supprimer ce fichier : le module générera le robots.txt canonique à la racine.
+User-agent: *
+Allow: /
+
+Sitemap: https://tbeaumont79.github.io/duska-landing/sitemap.xml
