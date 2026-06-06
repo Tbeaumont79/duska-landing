@@ -45,18 +45,10 @@ export default defineNuxtConfig({
   robots: {
     allow: '/',
     sitemap: `${siteUrl}/sitemap.xml`,
-    // Le module refuse de générer robots.txt sous un sous-chemin (base URL) — par design,
-    // car robots.txt doit vivre à la racine du host. À la racine d'un domaine (duska.app) il
-    // génère le fichier ; sous le sous-chemin Pages, on sert un robots.txt statique
-    // (public/robots.txt), copié tel quel et qui répond 200 (critère de vérif publique THI-85).
+    // Le module @nuxtjs/robots REFUSE de générer un robots.txt sous un baseURL (sous-chemin
+    // Pages projet) → on laisse le module gérer le cas racine (duska.app), et sous sous-chemin
+    // on sert un robots.txt STATIQUE depuis public/ (répond 200, déclare le sitemap). Voir THI-86.
     robotsTxt: baseURL === '/',
-  },
-
-  sitemap: {
-    // L'URL canonique absolue (origine + baseURL) est captée par le crawler du module puis
-    // re-préfixée par baseURL → entrée fantôme `${baseURL}duska-landing` (404). On l'exclut
-    // pour garder un sitemap propre, sans URL morte.
-    exclude: [`${baseURL.replace(/\/$/, '')}/duska-landing`],
   },
 
   css: ['~/assets/css/main.css'],
