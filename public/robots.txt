@@ -1,0 +1,8 @@
+# robots.txt servi sous le sous-chemin GitHub Pages (https://tbeaumont79.github.io/duska-landing/).
+# Sur ce host, les crawlers lisent le robots.txt à la racine du domaine ; ce fichier garantit
+# malgré tout une réponse 200 et déclare le sitemap. À la mise en ligne du domaine duska.app
+# (THI-67), c'est @nuxtjs/robots qui générera le robots.txt faisant autorité — voir THI-86.
+User-agent: *
+Allow: /
+
+Sitemap: https://tbeaumont79.github.io/duska-landing/sitemap.xml
