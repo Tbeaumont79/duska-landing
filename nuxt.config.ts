@@ -34,6 +34,16 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/fonts', '@nuxtjs/sitemap', '@nuxtjs/robots'],
 
+  sitemap: {
+    // Sous un sous-chemin Pages, le crawler prérend la home DEUX fois : en '/' et en
+    // '/<baseURL>/' (les self-links sont préfixés par le baseURL et suivis comme route à
+    // part entière). @nuxtjs/sitemap émet alors une entrée parasite dont le chemin est le
+    // baseURL répété (ex. '/duska-landing/duska-landing') → 404. L'`exclude` matche le chemin
+    // <loc> (baseURL déjà appliqué), donc on exclut précisément ce doublon. À la racine
+    // (duska.app, baseURL '/') le doublon n'existe pas → liste vide, aucun effet de bord. THI-89.
+    exclude: baseURL !== '/' ? [`${baseURL.replace(/\/$/, '')}${baseURL.replace(/\/$/, '')}`] : [],
+  },
+
   fonts: {
     // Self-hosted at build time → no external request, better LCP/CLS.
     families: [
