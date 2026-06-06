@@ -19,6 +19,10 @@ useSeoMeta({
   robots: 'index, follow',
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: url }],
+})
+
 // Date de dernière mise à jour (statique, pas de Date.now() au build).
 const lastUpdated = '6 juin 2026'
 const contactEmail = 'contact@duska.app'
