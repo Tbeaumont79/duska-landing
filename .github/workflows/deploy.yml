@@ -26,6 +26,11 @@ jobs:
       # Origine + sous-chemin projet tant que le domaine duska.app n'est pas relié.
       NUXT_PUBLIC_SITE_ORIGIN: ${{ vars.NUXT_PUBLIC_SITE_ORIGIN || 'https://tbeaumont79.github.io' }}
       NUXT_APP_BASE_URL: ${{ vars.NUXT_APP_BASE_URL || '/duska-landing/' }}
+      # GO-LIVE Play Store (WS-E / THI-100) : tant que la variable repo n'existe pas, les CTA store
+      # rendent « bientôt » (aucun lien mort). Le jour de la publication (WS-D), définir la variable
+      #   gh variable set NUXT_PUBLIC_PLAY_STORE_URL -b "https://play.google.com/store/apps/details?id=app.duska.app"
+      # puis relancer le déploiement → liens actifs tagués UTM. AUCUNE modif de code.
+      NUXT_PUBLIC_PLAY_STORE_URL: ${{ vars.NUXT_PUBLIC_PLAY_STORE_URL || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

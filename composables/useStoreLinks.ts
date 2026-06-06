@@ -9,7 +9,7 @@
 // ignorés par le Play Store). Google lit l'acquisition via le paramètre `referrer`
 // (Play Install Referrer), qui encapsule la chaîne UTM. On respecte donc les valeurs
 // UTM demandées tout en les rendant exploitables dans la Play Console.
-//   ex. ...details?id=app.duska&referrer=utm_source%3Dlanding%26utm_medium%3Dbadge%26utm_campaign%3Dlaunch
+//   ex. ...details?id=app.duska.app&referrer=utm_source%3Dlanding%26utm_medium%3Dbadge%26utm_campaign%3Dlaunch
 
 export interface StoreUtm {
   /** utm_source (ex. 'landing', 'blog') */

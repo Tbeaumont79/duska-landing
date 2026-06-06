@@ -31,9 +31,11 @@ export default defineNuxtConfig({
       siteUrl,
       // URL de la fiche Play Store, renseignée à la publication (WS-D, action fondateur).
       // Tant qu'elle est vide, les CTA store rendent l'état « bientôt disponible ».
-      // Go-live = définir NUXT_PUBLIC_PLAY_STORE_URL au build, ex.
-      //   https://play.google.com/store/apps/details?id=app.duska
-      // Aucune modif de code requise. Voir composables/useStoreLinks.ts (THI-107).
+      // Go-live = définir NUXT_PUBLIC_PLAY_STORE_URL au build. L'applicationId Android est
+      // verrouillé `app.duska.app` (THI-64) → l'URL est déterministe dès maintenant :
+      //   https://play.google.com/store/apps/details?id=app.duska.app
+      // Aucune modif de code requise (var CI `NUXT_PUBLIC_PLAY_STORE_URL`, cf deploy.yml).
+      // Voir composables/useStoreLinks.ts (THI-107 / THI-100).
       playStoreUrl: process.env.NUXT_PUBLIC_PLAY_STORE_URL || '',
     },
   },
