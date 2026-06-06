@@ -14,7 +14,8 @@
     "test": "node scripts/smoke.mjs",
     "verify": "pnpm typecheck && pnpm generate && pnpm smoke",
     "serve": "npx serve .output/public -l 4173",
-    "deploy": "nuxt generate && npx -y gh-pages@6 --dotfiles -d .output/public -b gh-pages -m \"deploy: static build [skip ci]\""
+    "deploy": "node scripts/deploy.mjs",
+    "deploy:dry-run": "node scripts/deploy.mjs --dry-run"
   },
   "devDependencies": {
     "@types/node": "^22.19.19",

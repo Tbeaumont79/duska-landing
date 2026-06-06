@@ -35,17 +35,21 @@ if (!existsSync(dist)) {
 
 console.log('Smoke test — landing Duska (.output/public)')
 
-// 2. Pages clés présentes (landing + SPA fallback + 404 + blog + articles)
+// 2. Pages clés présentes (landing + SPA fallback + 404 + privacy + blog + articles + SEO)
+//    /confidentialite/ et robots.txt sont CRITIQUES (URL Play Console / Data safety) :
+//    leur disparition silencieuse via un build partiel est la régression THI-111.
 const requiredPages = [
   'index.html',
   '200.html',
   '404.html',
+  'confidentialite/index.html',
   'blog/index.html',
   'blog/affirmations-positives-guide/index.html',
   'blog/affirmations-positives-matin/index.html',
   'blog/gerer-le-stress-au-quotidien/index.html',
   'blog/retrouver-confiance-en-soi/index.html',
   'blog/routine-gratitude/index.html',
+  'robots.txt',
   'sitemap.xml',
 ]
 const pages = {}
@@ -65,6 +69,20 @@ if (index) {
 
   if (/Installer Duska/i.test(index)) ok('landing : CTA "Installer Duska" présent')
   else fail('landing : CTA principal absent')
+}
+
+// 3b. La page de confidentialité rend bien son contenu (URL critique Play Console / Data safety).
+const privacy = pages['confidentialite/index.html']
+if (privacy) {
+  if (/confidentialit/i.test(privacy)) ok('privacy : contenu "Politique de confidentialité" rendu')
+  else fail('privacy : contenu attendu absent (page vide / non rendue ?)')
+}
+
+// 3c. robots.txt déclare bien le sitemap (sinon référencement / Data safety cassés).
+const robots = pages['robots.txt']
+if (robots) {
+  if (/Sitemap:\s*https?:\/\//i.test(robots)) ok('robots.txt : directive Sitemap présente')
+  else fail('robots.txt : directive Sitemap absente')
 }
 
 // 4. Le blog rend bien la liste d'articles
