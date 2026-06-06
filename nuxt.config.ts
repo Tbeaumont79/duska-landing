@@ -53,12 +53,13 @@ export default defineNuxtConfig({
   },
 
   robots: {
-    allow: '/',
-    sitemap: `${siteUrl}/sitemap.xml`,
-    // Le module @nuxtjs/robots REFUSE de générer un robots.txt sous un baseURL (sous-chemin
-    // Pages projet) → on laisse le module gérer le cas racine (duska.app), et sous sous-chemin
-    // on sert un robots.txt STATIQUE depuis public/ (répond 200, déclare le sitemap). Voir THI-86.
-    robotsTxt: baseURL === '/',
+    // Le robots.txt n'est PAS généré par le module : il l'est par `scripts/robots.mjs` (branché sur
+    // `postgenerate`), source unique pour la racine ET le sous-chemin. On désactive donc `robotsTxt`
+    // dans TOUS les cas. Raison : sous un baseURL le module refuse de générer, et quand il est actif
+    // il RENOMME `public/robots.txt` → `public/_robots.txt`, rendant la sortie fragile (un build
+    // racine cassait le build sous-chemin suivant → robots.txt absent → régression SEO). Voir THI-90.
+    // Le module reste chargé pour la gestion des balises meta robots.
+    robotsTxt: false,
   },
 
   css: ['~/assets/css/main.css'],

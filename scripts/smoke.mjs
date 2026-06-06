@@ -67,6 +67,15 @@ if (index) {
   else fail('landing : CTA principal absent')
 }
 
+// 3b. robots.txt présent dans l'artefact ET déclare le sitemap (régression THI-90 :
+//     @nuxtjs/robots peut renommer/omettre le fichier ; il est désormais généré par
+//     scripts/robots.mjs au postgenerate — ce filet vérifie qu'il survit au build).
+const robots = read('robots.txt')
+if (robots) {
+  if (/^\s*Sitemap:\s*https?:\/\/\S+\/sitemap\.xml\s*$/im.test(robots)) ok('robots.txt : présent et déclare le sitemap')
+  else fail('robots.txt : présent mais ne déclare pas de Sitemap valide')
+}
+
 // 4. Le blog rend bien la liste d'articles
 const blog = pages['blog/index.html']
 if (blog && /<a [^>]*href="[^"]*\/blog\//i.test(blog)) ok('blog : liens vers les articles présents')
