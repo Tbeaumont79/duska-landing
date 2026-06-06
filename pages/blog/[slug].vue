@@ -6,6 +6,13 @@ const config = useRuntimeConfig()
 const siteUrl = (config.public.siteUrl as string) || 'https://duska.app'
 const base = config.app.baseURL || '/'
 
+// CTA store sur l'article (THI-107) : « Télécharger Duska » avec UTM utm_source=blog,
+// dès que le Play Store est publié (NUXT_PUBLIC_PLAY_STORE_URL défini).
+const { isPlayStoreAvailable, playStoreLink } = useStoreLinks()
+const blogPlayUrl = computed(() =>
+  playStoreLink({ source: 'blog', medium: 'cta', campaign: 'launch' }),
+)
+
 const slug = String(route.params.slug)
 const article = getArticle(slug)
 
@@ -97,7 +104,16 @@ useHead({
         <aside class="art-cta">
           <h2>Envie d'un moment Duska chaque jour ?</h2>
           <p>Choisis ton humeur, reçois l'affirmation qui te ressemble, entretiens ta série.</p>
-          <NuxtLink to="/#telecharger" class="btn btn-primary">Installer l'app</NuxtLink>
+          <!-- Play Store publié : lien direct « Télécharger Duska » + UTM utm_source=blog -->
+          <a
+            v-if="isPlayStoreAvailable"
+            :href="blogPlayUrl"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener"
+          >Télécharger Duska</a>
+          <!-- Sinon : maillage interne vers la landing -->
+          <NuxtLink v-else to="/#telecharger" class="btn btn-primary">Installer l'app</NuxtLink>
           <p class="cta-note">
             Découvre aussi <NuxtLink to="/">la présentation de Duska</NuxtLink>.
           </p>
