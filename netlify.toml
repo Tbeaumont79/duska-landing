@@ -1,0 +1,35 @@
+# Hébergement Netlify de la landing Duska (THI-84).
+#
+# Pourquoi Netlify : le dépôt est PRIVÉ et le compte GitHub est sur l'offre gratuite —
+# GitHub Pages refuse de servir un dépôt privé sur ce plan (cause racine de THI-83).
+# Netlify sert les dépôts privés gratuitement, lance le build + le smoke comme VRAIE
+# barrière (un build/smoke rouge bloque la mise en ligne), et fournit des deploy previews
+# par PR. Indépendant du verrou de facturation qui bloque GitHub Actions.
+#
+# Sur Netlify le site est servi à la RACINE (sous-domaine *.netlify.app puis duska.app),
+# donc baseURL = "/" (et non /duska-landing/ comme sur GitHub Pages projet).
+
+[build]
+  # generate = build statique ; smoke = filet anti-régression (échoue => deploy bloqué).
+  command = "pnpm generate && pnpm smoke"
+  publish = ".output/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Servi à la racine du domaine Netlify.
+  NUXT_APP_BASE_URL = "/"
+  # À surcharger dans l'UI Netlify quand le domaine final est connu :
+  #   - tant que duska.app n'est pas relié : l'URL *.netlify.app du site
+  #   - une fois duska.app relié : https://duska.app
+  # Sert au canonical + sitemap (SEO). Défaut sûr ci-dessous.
+  NUXT_PUBLIC_SITE_ORIGIN = "https://duska.app"
+
+# Deploy previews : Netlify les crée automatiquement par PR — pas de config requise.
+
+# Sécurité de base (la landing n'embarque aucun secret).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
